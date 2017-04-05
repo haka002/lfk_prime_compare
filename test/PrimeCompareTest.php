@@ -122,7 +122,8 @@ class PrimeCompareTest extends PHPUnit_Framework_TestCase
 			[5, 25],
 			[5, 1582],
 			[719, 719],
-			[829, 829]
+			[829, 829],
+			[2, 210]
 		];
 	}
 
