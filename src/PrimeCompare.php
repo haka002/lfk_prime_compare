@@ -13,13 +13,6 @@ class PrimeCompare
 	 */
 	public function isPrime($number)
 	{
-		if ($number < 2)
-		{
-			throw new InvalidArgumentException(
-				sprintf('The numberString (%s) must be greater then 2', $number)
-			);
-		}
-
 		for ($i = 2; $i <= $number / 2; $i++)
 		{
 			if ($number % $i == 0)
@@ -38,32 +31,59 @@ class PrimeCompare
 	 */
 	public function getAllCombination($number)
 	{
-		$numberList      = [];
 		$combinationList = [];
 		$numberString    = (string)$number;
 
 		for ($i = 0; $i < strlen($numberString); $i++)
 		{
-			$numberList[]      = (int)$numberString[$i];
-			$combinationList[] = (int)$numberString[$i];
-		}
-
-		if ($number > 99)
-		{
-			foreach ($numberList as $index => $numberElement)
+			for ($j = 0; $j < strlen($numberString); $j++)
 			{
-				for ($j = $index + 1; $j < count($numberList); $j++)
+				$nextElement = $i + $j;
+
+				if (!isset($numberString[$nextElement]))
 				{
-					$combinationList[] = intval((string)$numberElement . (string)$numberList[$j]);
+					break;
 				}
+
+				$combinationList[] = (int)substr($numberString, $j, $i + 1);
 			}
 		}
 
-		if ($number > 9)
+		return $combinationList;
+	}
+
+	/**
+	 * @param int $number
+	 *
+	 * @return int
+	 */
+	public function getTheHighestPrime($number)
+	{
+		if ($number < 2)
 		{
-			$combinationList[] = $number;
+			throw new InvalidArgumentException(
+				sprintf('The numberString (%s) must be greater then 2', $number)
+			);
 		}
 
-		return $combinationList;
+		$highestPrime = 0;
+
+		foreach ($this->getAllCombination($number) as $combination)
+		{
+			if (
+				$combination > 1
+				&& $this->isPrime($combination)
+				&& $combination > $highestPrime
+			) {
+				$highestPrime = $combination;
+			}
+		}
+
+		if ($highestPrime == 0)
+		{
+			throw new InvalidArgumentException('The number doesn\'t contains any prime!');
+		}
+
+		return $highestPrime;
 	}
 }
