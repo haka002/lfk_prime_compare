@@ -77,19 +77,6 @@ class PrimeCompareTest extends PHPUnit_Framework_TestCase
 	}
 
 	/**
-	 * @param array $expected
-	 * @param int   $number
-	 *
-	 * @covers PrimeCompare
-	 *
-	 * @dataProvider isAllCombinationProvider
-	 */
-	public function testIsAllCombination(array $expected, $number)
-	{
-		$this->assertEquals($expected, $this->primeCompare->getAllCombination($number));
-	}
-
-	/**
 	 * @param $expected
 	 * @param $number
 	 *
@@ -100,16 +87,6 @@ class PrimeCompareTest extends PHPUnit_Framework_TestCase
 	public function testGetHighestPrime($expected, $number)
 	{
 		$this->assertEquals($expected, $this->primeCompare->getTheHighestPrime($number));
-	}
-
-	/**
-	 * @covers PrimeCompare
-	 *
-	 * @expectedException \InvalidArgumentException
-	 */
-	public function testGetHighestPrimeNull()
-	{
-		$this->assertEquals(2, $this->primeCompare->getTheHighestPrime(801));
 	}
 
 	/**
@@ -139,19 +116,6 @@ class PrimeCompareTest extends PHPUnit_Framework_TestCase
 			[false, 6],
 			[true, 7],
 			[false, 8]
-		];
-	}
-
-	/**
-	 * @return array
-	 */
-	public function isAllCombinationProvider()
-	{
-		return [
-			[[1], 1],
-			[[1,0,10], 10],
-			[[2,1,0,21,10,210], 210],
-			[[3,2,1,0,32,21,10,321, 210, 3210], 3210],
 		];
 	}
 }

@@ -27,34 +27,6 @@ class PrimeCompare
 	/**
 	 * @param int $number
 	 *
-	 * @return array
-	 */
-	public function getAllCombination($number)
-	{
-		$combinationList = [];
-		$numberString    = (string)$number;
-
-		for ($i = 0; $i < strlen($numberString); $i++)
-		{
-			for ($j = 0; $j < strlen($numberString); $j++)
-			{
-				$nextElement = $i + $j;
-
-				if (!isset($numberString[$nextElement]))
-				{
-					break;
-				}
-
-				$combinationList[] = (int)substr($numberString, $j, $i + 1);
-			}
-		}
-
-		return $combinationList;
-	}
-
-	/**
-	 * @param int $number
-	 *
 	 * @return int
 	 */
 	public function getTheHighestPrime($number)
@@ -67,15 +39,32 @@ class PrimeCompare
 		}
 
 		$highestPrime = 0;
+		$numberString = (string)$number;
 
-		foreach ($this->getAllCombination($number) as $combination)
+		for ($i = strlen($numberString) - 1; $i >= 0; $i--)
 		{
-			if (
-				$combination > 1
-				&& $this->isPrime($combination)
-				&& $combination > $highestPrime
-			) {
-				$highestPrime = $combination;
+			for ($j = 0; $j < strlen($numberString); $j++)
+			{
+				$nextElement = $i + $j;
+
+				if (isset($numberString[$nextElement]))
+				{
+					$combination = (int)substr($numberString, $j, $i + 1);
+
+					if (
+						$combination > 1
+						&& $this->isPrime($combination)
+						&& $combination > $highestPrime
+					) {
+						$highestPrime = $combination;
+					}
+				}
+			}
+
+			// If we have highest prime here, we have found the it!
+			if ($highestPrime != 0)
+			{
+				break;
 			}
 		}
 
